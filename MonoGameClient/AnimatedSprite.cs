@@ -5,7 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Cameras;
+
+using CameraNS;
 
 namespace Sprites
 {
@@ -149,9 +150,9 @@ namespace Sprites
             Position += delta;
             // update the new position of the Bounding Rect for an Animated sprite
             BoundingRect = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.spriteWidth, this.spriteHeight);
-            if (delta.X < 0)
-               _effect = SpriteEffects.FlipHorizontally;
-            else _effect = SpriteEffects.None;
+            //if (delta.X < 0)
+            //   _effect = SpriteEffects.FlipHorizontally;
+            //else _effect = SpriteEffects.None;
                 
         }
         public override void Draw(GameTime gameTime)
@@ -159,7 +160,7 @@ namespace Sprites
             if (!Alive) return;
             SpriteBatch spriteBatch = Game.Services.GetService<SpriteBatch>();
             if (spriteBatch == null) return;
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, FollowCamera.CameraTransform);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Camera.CurrentCameraTranslation);
             spriteBatch.Draw(spriteImage, Position, 
                         sourceRectangle, Color.White, 0f, Vector2.Zero, 1.0f, _effect, 0f);
             spriteBatch.End();

@@ -3,9 +3,10 @@ using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Cameras;
+
 using Sprites;
 using Microsoft.Xna.Framework.Audio;
+using CameraNS;
 
 namespace MonoGameClient
 {
@@ -25,7 +26,6 @@ namespace MonoGameClient
         private string connectionMessage;
         private bool Connected;
         private Rectangle worldRect;
-        private FollowCamera followCamera;
         private bool Joined;
 
         public Game1()
@@ -86,7 +86,7 @@ namespace MonoGameClient
             worldCoords = new Vector2(arg1, arg2);
             // Setup Camera
             worldRect = new Rectangle(new Point(0, 0), worldCoords.ToPoint());
-            followCamera = new FollowCamera(this, Vector2.Zero, worldCoords);
+            new Camera(this, Vector2.Zero, worldCoords);
 
             Joined = true;
             // Setup Player
@@ -167,7 +167,7 @@ namespace MonoGameClient
 
         private void DrawPlay()
         {
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, FollowCamera.CameraTransform);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Camera.CurrentCameraTranslation);
             spriteBatch.Draw(backGround, worldRect, Color.White);
             spriteBatch.End();
         }

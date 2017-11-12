@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using GameData;
 
 namespace Sprites
 {
@@ -26,6 +27,8 @@ namespace Sprites
         SoundEffect[] _directionSounds;
         SoundEffectInstance _soundPlayer;
         SpriteFont font;
+        public PlayerData playerData;
+        Position oldPosition;
 
         public int Score
         {
@@ -46,6 +49,9 @@ namespace Sprites
             _textures = tx;
             _directionSounds = sounds;
             _health = 100;
+            // link in the playerData. Eventually this will be created on the server and sent down.
+            playerData = new PlayerData { playerPosition = new Position { X = (int)pos.X, Y = (int)pos.Y } };
+            oldPosition = playerData.playerPosition;
 
         }
 
@@ -76,9 +82,12 @@ namespace Sprites
                 _direction = DIRECTION.RIGHT;
                 base.Move(new Vector2(1, 0) * _speed);
             }
-
+            
             SpriteImage = _textures[(int)_direction];
-
+            // Update internal player data for messages
+            oldPosition = playerData.playerPosition;
+            playerData = new PlayerData { playerPosition = new Position { X = (int)Position.X, Y = (int)Position.Y } };
+            
         }
     }
 }
