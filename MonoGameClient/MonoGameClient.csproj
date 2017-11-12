@@ -95,12 +95,6 @@
     <None Include="Content\Fonts\ScoreFont.spritefont" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\Visual Studio 2015\Projects\ReflectionMessagesExample\CommonClasses\CommonClasses.csproj">
-      <Project>{cf7e2f8c-5ed0-4d43-a178-badf84d17026}</Project>
-      <Name>CommonClasses</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
