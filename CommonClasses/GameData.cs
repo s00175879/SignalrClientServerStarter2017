@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 namespace GameData
 {
 
+    public class Position
+    {
+        public int X;
+        public int Y;
+    }
+
     public class PlayerData
     {
         public string header = string.Empty;
@@ -16,35 +22,45 @@ namespace GameData
         public string GamerTag = string.Empty;
         public string PlayerName = string.Empty;
         public int XP;
-        public float X;
-        public float Y;
+        public Position playerPosition;
         public string Password;
 
         public PlayerData() { }
-        public PlayerData(string messageHeader, string ImgName, string id, string tag, float x, float y)
+        public PlayerData(string messageHeader, string ImgName, string id, string tag, int x, int y)
         {
             header = messageHeader;
             playerID = id;
             imageName = ImgName;
-            X = x;
-            Y = y;
+            playerPosition.X = x;
+            playerPosition.Y = y;
             GamerTag = tag;
         }
 
         public string PlayerMessage(string header)
         {
-            return header + ":" + playerID + ":" + X.ToString() + ":" + Y.ToString();
+            return header + ":" + playerID + ":" + playerPosition.X.ToString() + ":" + playerPosition.Y.ToString();
         }
 
-        
+
     }
     public class LeavingData
     {
         public string playerID;
         public string Tag;
     }
+    public class CollectableData
+    {
+        public int ID;
+        public Position position;
+        public int worth; 
+        public CollectableData(int id,Position p,int val){
+            ID = id;
+            position = p;
+            worth = val;
+        }
 
-    public class GetWorldSize
+    }
+    public class WorldSize
     {
         public int X;
         public int y;
@@ -68,14 +84,7 @@ namespace GameData
         public string message = "Error --> ";
     }
     
-    public class GamePacket<T>{
-        public GamePacket(T obj)
-        {
-            val = obj;
-        }
-        public T val;
-        public Type type;
-    }
+    
 
 
 
