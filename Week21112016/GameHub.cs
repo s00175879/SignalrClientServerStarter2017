@@ -41,5 +41,12 @@ namespace Week21112016
         {
             Clients.Caller.joined(WorldX,WorldY);
         }
+
+        public PlayerData JoinPlayer(Position pos)
+        {
+            PlayerData player = new PlayerData("Joined", string.Empty, Players.Count().ToString(), "Player X", pos.X, pos.Y);
+            Players.Add(player);
+            return player;
+        }
     }
 }

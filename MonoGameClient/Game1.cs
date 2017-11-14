@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Input;
 using Sprites;
 using Microsoft.Xna.Framework.Audio;
 using CameraNS;
+using GameData;
+using System.Linq;
 
 namespace MonoGameClient
 {
@@ -20,6 +22,7 @@ namespace MonoGameClient
 
         HubConnection serverConnection;
         IHubProxy proxy;
+
         Vector2 worldCoords;
         SpriteFont messageFont;
         Texture2D backGround;
@@ -99,6 +102,19 @@ namespace MonoGameClient
                         }, new SoundEffect[] { }, GraphicsDevice.Viewport.Bounds.Center.ToVector2(),
                         8, 0, 5.0f);
 
+            proxy.Invoke<PlayerData>("JoinPlayer", new Position {X = GraphicsDevice.Viewport.Bounds.Center.X,
+                                                                Y = GraphicsDevice.Viewport.Bounds.Center.Y})
+                                                                .ContinueWith((p) => {
+                                                                    if (p.Result == null)
+                                                                        connectionMessage = "No Player data returned";
+                                                                    else
+                                                                    {
+                                                                        Player player;
+                                                                        player = (Player)Components.FirstOrDefault(pl => pl.GetType() == typeof(Player));
+                                                                        if (player != null)
+                                                                            player.playerData = p.Result; 
+                                                                    }
+                                                                });
 
         }
 
@@ -112,6 +128,7 @@ namespace MonoGameClient
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(spriteBatch);
             messageFont = Content.Load<SpriteFont>(@"Fonts\ScoreFont");
+            Services.AddService(Content.Load<SpriteFont>(@"Fonts\PlayerFont"));
             backGround = Content.Load<Texture2D>(@"Textures\background");
             // TODO: use this.Content to load your game content here
         }
